@@ -13,7 +13,7 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: lightgray;
+  background-color: black;
   width: 100%;
   height: 8vh;
   position: fixed;
@@ -35,7 +35,7 @@ html {
   text-decoration: none;
   text-transform: uppercase;
   margin-right: 50px;
-  color: black;
+  color: white;
   background-color: transparent;
   border: none;
   border-radius: 5px;
@@ -131,19 +131,18 @@ tr:hover {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px #1493ff;
-  border-radius: 10px;
+  box-shadow: inset 0 0 5px black;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #1493ff;
+  background: black;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(20, 147, 255, 0.5);
+  background: rgba(0, 0, 0, 0.9);
 }
 
 @media (max-width: 800px) {
