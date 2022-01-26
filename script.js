@@ -4,7 +4,7 @@ const urlMatches =
   "http://api.football-data.org/v2/competitions/2014/matches?status=SCHEDULED";
 
 const urlStandings =
-  "http://api.football-data.org/v2/competitions/2014/standings";
+  "http://api.football-data.org/v2/competitions/2014/standings?standingType=AWAY";
 
 const urlResults =
   "http://api.football-data.org/v2/competitions/2014/matches?status=FINISHED";
@@ -75,6 +75,10 @@ async function getStandings() {
   `;
 
   document.getElementById(
+    "standingsHome"
+  ).style.backgroundImage = `<img src="silhouette1.svg">`;
+
+  document.getElementById(
     "standingsAway"
   ).innerHTML = `<h1 class='title'>AWAY</h1><table class='table'>
   <tr class='tableHeading'><td></td><td></td><td></td><td>P</td><td>W</td><td>D</td><td>L</td><td>GF</td><td>GA</td><td>GD</td></tr>
@@ -142,7 +146,16 @@ async function getScorers() {
   `;
 }
 
-getMatches();
-getStandings();
-getResults();
-getScorers();
+// getMatches();
+// getStandings();
+// getResults();
+// getScorers();
+
+let menuBtn = document.querySelector(".fa-bars");
+let navMenu = document.querySelector(".menu");
+console.log(navMenu);
+
+menuBtn.addEventListener("click", () => {
+  menuBtn.classList.toggle("fa-times");
+  navMenu.classList.toggle("active");
+});
