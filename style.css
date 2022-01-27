@@ -10,6 +10,7 @@ html {
 
 body {
   font-family: "PT Sans Narrow", sans-serif;
+  overflow-x: hidden;
 }
 
 header {
@@ -24,7 +25,6 @@ header {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: auto;
   padding: 1vh;
 }
 
@@ -80,27 +80,182 @@ li a:visited {
   color: aliceblue;
 }
 
-.fa-bars {
+.menuBtn {
   display: none;
-  cursor: pointer;
-  color: #0095fd;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.table td {
+  padding: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: lightgray;
+  transition: 0.5s;
+}
+
+tr:nth-child(odd) {
+  transition: 0.5s;
+}
+
+tr:hover {
+  background-color: #0095fd;
+  color: white;
+}
+
+.tableHeading:hover {
+  background-color: transparent;
+  color: black;
+}
+
+td {
+  font-size: 18px;
+}
+
+.title {
+  text-align: center;
+  font-family: "PT Sans", sans-serif;
   font-size: 25px;
+  font-weight: bold;
+  transition: 0.5s;
+  margin-bottom: 10px;
 }
 
-.menu.active {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+.title:hover {
+  color: #0095fd;
+  cursor: pointer;
 }
 
-@media (max-width: 876px) {
-  .fa-bars {
+/* .schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+} */
+
+.standings,
+.results,
+.goalscorers {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
+  align-items: center;
+  padding: 25px;
+  /* display: flex;
+  align-items: center;
+  justify-content: space-around;
+  justify-content: space-between; */
+}
+
+.schedule {
+  padding: 25px;
+}
+
+.schedule,
+#standings,
+#results,
+#goalscorers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.standings,
+.goalscorers {
+  background: aliceblue;
+}
+
+.points {
+  font-weight: bold;
+}
+
+.winner {
+  font-weight: bold;
+}
+
+footer {
+  padding: 10px;
+  background: #000;
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.fa-arrow-circle-up {
+  color: #fff;
+  font-size: 18px;
+}
+
+/* .schedule h1 {
+  margin-bottom: 10px;
+} */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: aliceblue;
+  box-shadow: inset 0 0 5px #0095fd;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #0095fd;
+}
+
+@media (max-width: 1068px) {
+  .logo {
+    /* justify-content: space-between; */
+    justify-content: space-around;
+    height: auto;
+  }
+  .logo img {
+    height: 75px;
+  }
+  .navbar {
+    /* display: none; */
+    visibility: hidden;
+  }
+  .menu {
+    flex-direction: column;
+    height: auto;
+  }
+  .menu li {
+    padding: 20px;
+  }
+  .navbar.active {
+    /* display: flex; */
+    transition: visibility 1s ease;
+    visibility: visible;
+  }
+  .menuBtn {
     display: flex;
+    font-size: 40px;
+    cursor: pointer;
   }
 
-  .menu {
-    padding: 2%;
+  .schedule,
+  .standings,
+  .results,
+  .goalscorers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .silhouette1,
+  .silhouette2,
+  .silhouette3,
+  .silhouette4,
+  .silhouette5,
+  .silhouette6 {
+    display: none;
   }
 }
 
@@ -164,6 +319,8 @@ li a:visited {
 .goalscorers {
   padding-top: 5vh;
 }
+
+
 
 .schedule {
   padding-top: 10vh;
@@ -246,27 +403,6 @@ tr:hover {
   /* object-fit: cover; */
 /* height: 250px; */
 /* } */
-
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px black;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: black;
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.9);
-}
 
 /* @media (max-width: 800px) {
   #navbar {

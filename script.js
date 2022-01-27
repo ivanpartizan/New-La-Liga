@@ -1,10 +1,10 @@
-const scroll = new SmoothScroll('a[href*="#"]');
+// const scroll = new SmoothScroll('a[href*="#"]');
 
 const urlMatches =
   "http://api.football-data.org/v2/competitions/2014/matches?status=SCHEDULED";
 
 const urlStandings =
-  "http://api.football-data.org/v2/competitions/2014/standings?standingType=AWAY";
+  "http://api.football-data.org/v2/competitions/2014/standings?standingType=TOTAL";
 
 const urlResults =
   "http://api.football-data.org/v2/competitions/2014/matches?status=FINISHED";
@@ -27,7 +27,10 @@ async function getMatches() {
   ${data.matches
     .slice(0, 10)
     .map(
-      (match) => `<td>${match.utcDate.slice(0, 10)}</td><td>
+      (match) => `<td>${match.utcDate.slice(
+        0,
+        10
+      )}</td> <td>${match.utcDate.slice(11, 16)} GMT</td><td>
     ${match.homeTeam.name}</td><td>${match.awayTeam.name}</td></tr>`
     )
     .join("")}</table>
@@ -45,7 +48,7 @@ async function getStandings() {
   console.log(data);
 
   document.getElementById(
-    "standingsOverall"
+    "standings"
   ).innerHTML = `<h1 class='title'>STANDINGS</h1><table class='table'>
   <tr class='tableHeading'><td></td><td></td><td></td><td>P</td><td>W</td><td>D</td><td>L</td><td>GF</td><td>GA</td><td>GD</td></tr>
   <tr>
@@ -59,39 +62,39 @@ async function getStandings() {
     .join("")}</table>
   `;
 
-  document.getElementById(
-    "standingsHome"
-  ).innerHTML = `<h1 class='title'>HOME</h1><table class='table'>
-  <tr class='tableHeading'><td></td><td></td><td></td><td>P</td><td>W</td><td>D</td><td>L</td><td>GF</td><td>GA</td><td>GD</td></tr>
-  <tr>
-  ${data.standings[1].table
-    .map(
-      (team) => `
+  // document.getElementById(
+  //   "standingsHome"
+  // ).innerHTML = `<h1 class='title'>HOME</h1><table class='table'>
+  // <tr class='tableHeading'><td></td><td></td><td></td><td>P</td><td>W</td><td>D</td><td>L</td><td>GF</td><td>GA</td><td>GD</td></tr>
+  // <tr>
+  // ${data.standings[1].table
+  //   .map(
+  //     (team) => `
 
-    <td>${team.position}</td><td><img src=${team.team.crestUrl} height='20'></td><td>${team.team.name}</td><td class='points'>${team.points}</td><td>${team.won}</td><td>${team.draw}</td><td>${team.lost}</td><td>${team.goalsFor}</td><td>${team.goalsAgainst}</td><td>${team.goalDifference}</td>
-    </tr>`
-    )
-    .join("")}</table>
-  `;
+  //   <td>${team.position}</td><td><img src=${team.team.crestUrl} height='20'></td><td>${team.team.name}</td><td class='points'>${team.points}</td><td>${team.won}</td><td>${team.draw}</td><td>${team.lost}</td><td>${team.goalsFor}</td><td>${team.goalsAgainst}</td><td>${team.goalDifference}</td>
+  //   </tr>`
+  //   )
+  //   .join("")}</table>
+  // `;
 
-  document.getElementById(
-    "standingsHome"
-  ).style.backgroundImage = `<img src="silhouette1.svg">`;
+  // document.getElementById(
+  //   "standingsHome"
+  // ).style.backgroundImage = `<img src="silhouette1.svg">`;
 
-  document.getElementById(
-    "standingsAway"
-  ).innerHTML = `<h1 class='title'>AWAY</h1><table class='table'>
-  <tr class='tableHeading'><td></td><td></td><td></td><td>P</td><td>W</td><td>D</td><td>L</td><td>GF</td><td>GA</td><td>GD</td></tr>
-  <tr>
-  ${data.standings[2].table
-    .map(
-      (team) => `
+  // document.getElementById(
+  //   "standingsAway"
+  // ).innerHTML = `<h1 class='title'>AWAY</h1><table class='table'>
+  // <tr class='tableHeading'><td></td><td></td><td></td><td>P</td><td>W</td><td>D</td><td>L</td><td>GF</td><td>GA</td><td>GD</td></tr>
+  // <tr>
+  // ${data.standings[2].table
+  //   .map(
+  //     (team) => `
 
-    <td>${team.position}</td><td><img src=${team.team.crestUrl} height='20'></td><td>${team.team.name}</td><td class='points'>${team.points}</td><td>${team.won}</td><td>${team.draw}</td><td>${team.lost}</td><td>${team.goalsFor}</td><td>${team.goalsAgainst}</td><td>${team.goalDifference}</td>
-    </tr>`
-    )
-    .join("")}</table>
-  `;
+  //   <td>${team.position}</td><td><img src=${team.team.crestUrl} height='20'></td><td>${team.team.name}</td><td class='points'>${team.points}</td><td>${team.won}</td><td>${team.draw}</td><td>${team.lost}</td><td>${team.goalsFor}</td><td>${team.goalsAgainst}</td><td>${team.goalDifference}</td>
+  //   </tr>`
+  //   )
+  //   .join("")}</table>
+  // `;
 }
 
 async function getResults() {
@@ -114,11 +117,13 @@ async function getResults() {
           match.score.winner == "HOME_TEAM" ? "winner" : "loser"
         }'>${match.homeTeam.name}</td> <td>vs</td> <td class='${
           match.score.winner == "AWAY_TEAM" ? "winner" : "loser"
-        }'>${match.awayTeam.name}</td><td>${
-          match.score.fullTime.homeTeam
-        }</td><td>-</td><td>${match.score.fullTime.awayTeam}</td><td>(${
-          match.score.halfTime.homeTeam
-        } - ${match.score.halfTime.awayTeam})</td></tr>`
+        }'>${match.awayTeam.name}</td>
+        <td>${match.score.fullTime.homeTeam} - ${
+          match.score.fullTime.awayTeam
+        }</td>
+        <td>(${match.score.halfTime.homeTeam} - ${
+          match.score.halfTime.awayTeam
+        })</td></tr>`
     )
     .join("")}</table>
   `;
@@ -146,16 +151,16 @@ async function getScorers() {
   `;
 }
 
-// getMatches();
-// getStandings();
-// getResults();
-// getScorers();
+getMatches();
+getStandings();
+getResults();
+getScorers();
 
 let menuBtn = document.querySelector(".fa-bars");
-let navMenu = document.querySelector(".menu");
-console.log(navMenu);
+let navbar = document.querySelector(".navbar");
+// console.log(navMenu);
 
 menuBtn.addEventListener("click", () => {
   menuBtn.classList.toggle("fa-times");
-  navMenu.classList.toggle("active");
+  navbar.classList.toggle("active");
 });
