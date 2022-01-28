@@ -217,10 +217,14 @@ footer {
   .logo img {
     height: 75px;
   }
-  .navbar {
-    /* display: none; */
+  /* .navbar {
+    width: 100%;
+    padding: 0;
+    max-height: 0px;
+    overflow: hidden;
     visibility: hidden;
-  }
+    transition: all 0.5s ease;
+  } */
   .menu {
     flex-direction: column;
     height: auto;
@@ -228,11 +232,7 @@ footer {
   .menu li {
     padding: 20px;
   }
-  .navbar.active {
-    /* display: flex; */
-    transition: visibility 1s ease;
-    visibility: visible;
-  }
+
   .menuBtn {
     display: flex;
     font-size: 40px;
@@ -256,6 +256,17 @@ footer {
   .silhouette5,
   .silhouette6 {
     display: none;
+  }
+
+  .navbar {
+    max-height: 0;
+    transition: max-height 1s ease;
+    overflow: hidden;
+  }
+
+  .navbar.active {
+    max-height: 50vh;
+    transition: max-height 1s ease;
   }
 }
 
