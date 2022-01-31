@@ -1,15 +1,15 @@
 // const scroll = new SmoothScroll('a[href*="#"]');
 
 const urlMatches =
-  "http://api.football-data.org/v2/competitions/2014/matches?status=SCHEDULED";
+  "https://api.football-data.org/v2/competitions/2014/matches?status=SCHEDULED";
 
 const urlStandings =
-  "http://api.football-data.org/v2/competitions/2014/standings?standingType=TOTAL";
+  "https://api.football-data.org/v2/competitions/2014/standings?standingType=TOTAL";
 
 const urlResults =
-  "http://api.football-data.org/v2/competitions/2014/matches?status=FINISHED";
+  "https://api.football-data.org/v2/competitions/2014/matches?status=FINISHED";
 
-const urlScorers = "http://api.football-data.org/v2/competitions/2014/scorers";
+const urlScorers = "https://api.football-data.org/v2/competitions/2014/scorers";
 
 async function getMatches() {
   const response = await fetch(urlMatches, {
