@@ -166,7 +166,8 @@ td {
   text-align: center;
 }
 
-.teamName {
+.teamName,
+.playerName {
   text-align: left;
 }
 

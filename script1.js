@@ -1,10 +1,82 @@
+const menuBtn = document.querySelector(".fa-bars");
+const navbar = document.querySelector(".navbar");
+
+menuBtn.addEventListener("click", () => {
+  menuBtn.classList.toggle("fa-times");
+  navbar.classList.toggle("active");
+});
+
 const apiKey = "63c5a6bf56f958b121ecd6b7ae6307f0";
-const apiUrl =
-  "https://v3.football.api-sports.io/standings?league=140&season=2023"; //
+const apiUrlStandings =
+  "https://v3.football.api-sports.io/standings?league=140&season=2023";
+const apiUrlScorers =
+  "https://v3.football.api-sports.io/players/topscorers?league=140&season=2023";
+const apiUrlGames =
+  "https://v3.football.api-sports.io/fixtures?league=140&season=2023";
+
+function schedule() {
+  document.getElementById(
+    "schedule"
+  ).innerHTML = `<h1 class='title'>Next in LA LIGA</h1>
+  <table class='table matches'>
+    <tr><td>The 2024–25 La Liga will start on August 18, 2024</td></tr>
+  </table>`;
+}
+
+schedule();
+
+async function getGames() {
+  try {
+    const response = await fetch(apiUrlGames, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": apiKey,
+      },
+    });
+
+    const data = await response.json();
+    const games = data.response;
+
+    displayGames(games);
+  } catch (error) {
+    console.error("Error: something went wrong", error.message);
+  }
+}
+
+function displayGames(games) {
+  const gamesTable = games
+    .map(
+      (game) => `
+        <tr><td>Round ${game.league.round.slice(-2).trim()}</td><td class='${
+        game.teams.home.winner == true ? "winner" : "loser"
+      }'><img src=${game.teams.home.logo} height='20'</img> ${
+        game.teams.home.name
+      }</td> <td>vs</td> <td class='${
+        game.teams.away.winner == true ? "winner" : "loser"
+      }'>${game.teams.away.name} <img src=${
+        game.teams.away.logo
+      } height='20'</img></td>
+        <td>${game.score.fulltime.home} - ${game.score.fulltime.away}</td>
+        <td>(${game.score.halftime.home} - ${
+        game.score.halftime.away
+      })</td></tr>`
+    )
+    .join("");
+
+  const gamesTableHTML = `
+  <h1 class='title'>RESULTS</h1>
+  <table class='table matches'>
+    ${gamesTable}
+  </table>
+`;
+
+  document.getElementById("results").innerHTML = gamesTableHTML;
+}
 
 async function getStandings() {
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(apiUrlStandings, {
       method: "GET",
       headers: {
         "x-rapidapi-host": "v3.football.api-sports.io",
@@ -54,4 +126,42 @@ function displayStandings(standings) {
   document.getElementById("standings").innerHTML = standingsTableHTML;
 }
 
+async function getScorers() {
+  try {
+    const response = await fetch(apiUrlScorers, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": apiKey,
+      },
+    });
+
+    const data = await response.json();
+    const scorers = data.response;
+
+    displayScorers(scorers);
+  } catch (error) {
+    console.error("Error: something went wrong", error.message);
+  }
+}
+
+function displayScorers(scorers) {
+  const goalscorersTable = scorers
+    .map(
+      (player) => `
+     <td class='playerName'>
+    ${player.player.firstname} ${player.player.lastname}<td><td class='teamName'>${player.statistics[0].team.name}<td><td>${player.player.nationality}<td><td>${player.statistics[0].goals.total}<td></tr>`
+    )
+    .join("");
+
+  const goalscorersTableHTML = `<h1 class='title'>TOP 20 GOALSCORERS</h1><table class='table scorers'><tr class='tableHeading'><td>Player<td><td>Team<td><td>Country<td><td>Goals<td></tr><tr>
+      ${goalscorersTable}
+    </table>
+  `;
+
+  document.getElementById("goalscorers").innerHTML = goalscorersTableHTML;
+}
+
+getGames();
 getStandings();
+getScorers();
