@@ -11,23 +11,14 @@ const apiUrlStandings =
   "https://v3.football.api-sports.io/standings?league=140&season=2023";
 const apiUrlScorers =
   "https://v3.football.api-sports.io/players/topscorers?league=140&season=2023";
-const apiUrlGames =
+const apiUrlResults =
   "https://v3.football.api-sports.io/fixtures?league=140&season=2023";
+const apiUrlFixtures =
+  "https://v3.football.api-sports.io/fixtures?league=140&season=2024";
 
-function schedule() {
-  document.getElementById(
-    "schedule"
-  ).innerHTML = `<h1 class='title'>Next in LA LIGA</h1>
-  <table class='table matches'>
-    <tr><td>The 2024–25 La Liga will start on August 18, 2024</td></tr>
-  </table>`;
-}
-
-schedule();
-
-async function getGames() {
+async function getFixtures() {
   try {
-    const response = await fetch(apiUrlGames, {
+    const response = await fetch(apiUrlFixtures, {
       method: "GET",
       headers: {
         "x-rapidapi-host": "v3.football.api-sports.io",
@@ -38,14 +29,60 @@ async function getGames() {
     const data = await response.json();
     const games = data.response;
 
-    displayGames(games);
+    displayFixtures(games);
   } catch (error) {
     console.error("Error: something went wrong", error.message);
   }
 }
 
-function displayGames(games) {
-  const gamesTable = games
+function displayFixtures(games) {
+  const fixturesTable = games
+    .map(
+      (game) => `
+        <tr><td>Round ${game.league.round.slice(-2).trim()}</td><td class='${
+        game.teams.home.winner == true ? "winner" : "loser"
+      }'><img src=${game.teams.home.logo} height='20'</img> ${
+        game.teams.home.name
+      }</td> <td>vs</td> <td class='${
+        game.teams.away.winner == true ? "winner" : "loser"
+      }'>${game.teams.away.name} <img src=${
+        game.teams.away.logo
+      } height='20'</img></td>
+        <td>${game.fixture.date.slice(0, 10)}</td>
+        <td>${game.fixture.date.slice(11, 16)}</td></tr>`
+    )
+    .join("");
+
+  const fixturesTableHTML = `
+  <h1 class='title'>Next in LA LIGA</h1><table class='table matches'>
+    ${fixturesTable}
+  </table>
+`;
+
+  document.getElementById("schedule").innerHTML = fixturesTableHTML;
+}
+
+async function getResults() {
+  try {
+    const response = await fetch(apiUrlResults, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": apiKey,
+      },
+    });
+
+    const data = await response.json();
+    const games = data.response;
+
+    displayResults(games);
+  } catch (error) {
+    console.error("Error: something went wrong", error.message);
+  }
+}
+
+function displayResults(games) {
+  const resultsTable = games
     .map(
       (game) => `
         <tr><td>Round ${game.league.round.slice(-2).trim()}</td><td class='${
@@ -64,14 +101,14 @@ function displayGames(games) {
     )
     .join("");
 
-  const gamesTableHTML = `
+  const resultsTableHTML = `
   <h1 class='title'>RESULTS</h1>
   <table class='table matches'>
-    ${gamesTable}
+    ${resultsTable}
   </table>
 `;
 
-  document.getElementById("results").innerHTML = gamesTableHTML;
+  document.getElementById("results").innerHTML = resultsTableHTML;
 }
 
 async function getStandings() {
@@ -162,6 +199,7 @@ function displayScorers(scorers) {
   document.getElementById("goalscorers").innerHTML = goalscorersTableHTML;
 }
 
-getGames();
+getFixtures();
+getResults();
 getStandings();
 getScorers();
