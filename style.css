@@ -151,6 +151,10 @@ td {
   justify-content: space-between; */
 }
 
+.results table tr {
+  cursor: pointer;
+}
+
 .schedule {
   padding: 25px;
 }
@@ -212,6 +216,20 @@ footer {
 }
 ::-webkit-scrollbar-thumb {
   background-color: #0095fd;
+}
+
+.popUp {
+  font-family: "PT Sans Narrow", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: aliceblue;
+  /* text-align: center; */
+}
+
+.popUp table {
+  text-align: center;
 }
 
 @media (max-width: 1068px) {
