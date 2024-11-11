@@ -8,14 +8,14 @@ menuBtn.addEventListener("click", () => {
 
 const apiKey = "63c5a6bf56f958b121ecd6b7ae6307f0";
 const apiUrlStandings =
-  "https://v3.football.api-sports.io/standings?league=140&season=2023";
+  "https://v3.football.api-sports.io/standings?league=140&season=2024";
 const apiUrlScorers =
-  "https://v3.football.api-sports.io/players/topscorers?league=140&season=2023";
+  "https://v3.football.api-sports.io/players/topscorers?league=140&season=2024";
 
 const apiUrlResults =
-  "https://v3.football.api-sports.io/fixtures?league=140&season=2023";
+  "https://v3.football.api-sports.io/fixtures?league=140&season=2024&status=FT";
 const apiUrlFixtures =
-  "https://v3.football.api-sports.io/fixtures?league=140&season=2024";
+  "https://v3.football.api-sports.io/fixtures?league=140&season=2024&status=NS";
 
 // Store references to popup windows
 const popups = {};
