@@ -6,7 +6,7 @@ menuBtn.addEventListener("click", () => {
   navbar.classList.toggle("active");
 });
 
-const apiKey = "63c5a6bf56f958b121ecd6b7ae6307f0";
+const apiKey = "8357e26fab4d70715cc1dbec9264fa45";
 const apiUrlStandings =
   "https://v3.football.api-sports.io/standings?league=140&season=2024";
 const apiUrlScorers =
